@@ -10,10 +10,11 @@ Target Server Type    : MYSQL
 Target Server Version : 50622
 File Encoding         : 65001
 
-Date: 2022-03-22 14:10:30
+Date: 2023-05-23 14:10:30
 */
-use hotel;
+
 SET FOREIGN_KEY_CHECKS=0;
+use hotel;
 
 -- ----------------------------
 -- Table structure for accommodation
@@ -34,7 +35,7 @@ CREATE TABLE `accommodation` (
 -- ----------------------------
 -- Records of accommodation
 -- ----------------------------
-INSERT INTO `accommodation` VALUES ('2022-3-22', '101', '1', '1');
+INSERT INTO `accommodation` VALUES ('2023-5-23', '101', '1', '1');
 
 -- ----------------------------
 -- Table structure for auth_group
@@ -115,34 +116,7 @@ INSERT INTO `auth_permission` VALUES ('25', 'Can add accommodation', '7', 'add_a
 INSERT INTO `auth_permission` VALUES ('26', 'Can change accommodation', '7', 'change_accommodation');
 INSERT INTO `auth_permission` VALUES ('27', 'Can delete accommodation', '7', 'delete_accommodation');
 INSERT INTO `auth_permission` VALUES ('28', 'Can view accommodation', '7', 'view_accommodation');
-INSERT INTO `auth_permission` VALUES ('29', 'Can add client', '8', 'add_client');
-INSERT INTO `auth_permission` VALUES ('30', 'Can change client', '8', 'change_client');
-INSERT INTO `auth_permission` VALUES ('31', 'Can delete client', '8', 'delete_client');
-INSERT INTO `auth_permission` VALUES ('32', 'Can view client', '8', 'view_client');
-INSERT INTO `auth_permission` VALUES ('33', 'Can add food', '9', 'add_food');
-INSERT INTO `auth_permission` VALUES ('34', 'Can change food', '9', 'change_food');
-INSERT INTO `auth_permission` VALUES ('35', 'Can delete food', '9', 'delete_food');
-INSERT INTO `auth_permission` VALUES ('36', 'Can view food', '9', 'view_food');
-INSERT INTO `auth_permission` VALUES ('37', 'Can add order', '10', 'add_order');
-INSERT INTO `auth_permission` VALUES ('38', 'Can change order', '10', 'change_order');
-INSERT INTO `auth_permission` VALUES ('39', 'Can delete order', '10', 'delete_order');
-INSERT INTO `auth_permission` VALUES ('40', 'Can view order', '10', 'view_order');
-INSERT INTO `auth_permission` VALUES ('41', 'Can add park', '11', 'add_park');
-INSERT INTO `auth_permission` VALUES ('42', 'Can change park', '11', 'change_park');
-INSERT INTO `auth_permission` VALUES ('43', 'Can delete park', '11', 'delete_park');
-INSERT INTO `auth_permission` VALUES ('44', 'Can view park', '11', 'view_park');
-INSERT INTO `auth_permission` VALUES ('45', 'Can add room', '12', 'add_room');
-INSERT INTO `auth_permission` VALUES ('46', 'Can change room', '12', 'change_room');
-INSERT INTO `auth_permission` VALUES ('47', 'Can delete room', '12', 'delete_room');
-INSERT INTO `auth_permission` VALUES ('48', 'Can view room', '12', 'view_room');
-INSERT INTO `auth_permission` VALUES ('49', 'Can add staff', '13', 'add_staff');
-INSERT INTO `auth_permission` VALUES ('50', 'Can change staff', '13', 'change_staff');
-INSERT INTO `auth_permission` VALUES ('51', 'Can delete staff', '13', 'delete_staff');
-INSERT INTO `auth_permission` VALUES ('52', 'Can view staff', '13', 'view_staff');
-INSERT INTO `auth_permission` VALUES ('53', 'Can add vip', '14', 'add_vip');
-INSERT INTO `auth_permission` VALUES ('54', 'Can change vip', '14', 'change_vip');
-INSERT INTO `auth_permission` VALUES ('55', 'Can delete vip', '14', 'delete_vip');
-INSERT INTO `auth_permission` VALUES ('56', 'Can view vip', '14', 'view_vip');
+
 
 -- ----------------------------
 -- Table structure for auth_user
@@ -167,7 +141,7 @@ CREATE TABLE `auth_user` (
 -- ----------------------------
 -- Records of auth_user
 -- ----------------------------
-INSERT INTO `auth_user` VALUES ('1', 'pbkdf2_sha256$120000$Sso8xWqv7WUU$YwCS3yM1ucajK8jENIQfTaOh5gLxbSyQvDPUhARxLEo=', '2022-03-22 05:57:25.450008', '1', 'admin', '', '', '123@qq.com', '1', '1', '2022-03-22 05:47:09.487388');
+INSERT INTO `auth_user` VALUES ('1', 'pbkdf2_sha256$120000$Sso8xWqv7WUU$YwCS3yM1ucajK8jENIQfTaOh5gLxbSyQvDPUhARxLEo=', '2023-05-23 05:57:25.450008', '1', 'admin', '', '', '123@qq.com', '1', '1', '2023-05-23 05:47:09.487388');
 
 -- ----------------------------
 -- Table structure for auth_user_groups
@@ -221,7 +195,7 @@ CREATE TABLE `client` (
 -- ----------------------------
 -- Records of client
 -- ----------------------------
-INSERT INTO `client` VALUES ('1', '赵四', '231012341234567890');
+INSERT INTO `client` VALUES ('1', 'xuhao_client', '114514');
 
 -- ----------------------------
 -- Table structure for django_admin_log
@@ -246,14 +220,7 @@ CREATE TABLE `django_admin_log` (
 -- ----------------------------
 -- Records of django_admin_log
 -- ----------------------------
-INSERT INTO `django_admin_log` VALUES ('1', '2022-03-22 05:57:59.100730', '1', 'Vip object (1)', '1', '[{\"added\": {}}]', '14', '1');
-INSERT INTO `django_admin_log` VALUES ('2', '2022-03-22 05:58:32.913980', '1', 'Park object (1)', '1', '[{\"added\": {}}]', '11', '1');
-INSERT INTO `django_admin_log` VALUES ('3', '2022-03-22 05:59:24.059057', '1', 'Room object (1)', '1', '[{\"added\": {}}]', '12', '1');
-INSERT INTO `django_admin_log` VALUES ('4', '2022-03-22 05:59:47.670863', '1', 'Room object (1)', '2', '[]', '12', '1');
-INSERT INTO `django_admin_log` VALUES ('5', '2022-03-22 06:01:48.842735', '1', 'Client object (1)', '1', '[{\"added\": {}}]', '8', '1');
-INSERT INTO `django_admin_log` VALUES ('6', '2022-03-22 06:02:25.695448', '1', 'Food object (1)', '1', '[{\"added\": {}}]', '9', '1');
-INSERT INTO `django_admin_log` VALUES ('7', '2022-03-22 06:02:53.655545', '101', 'Order object (101)', '1', '[{\"added\": {}}]', '10', '1');
-INSERT INTO `django_admin_log` VALUES ('8', '2022-03-22 06:09:30.199351', '101', '客房订单管理', '1', '[{\"added\": {}}]', '7', '1');
+
 
 -- ----------------------------
 -- Table structure for django_content_type
@@ -429,7 +396,7 @@ CREATE TABLE `staff` (
 -- ----------------------------
 -- Records of staff
 -- ----------------------------
-INSERT INTO `staff` VALUES ('101', '王百万', '总经理', '12000', '12');
+INSERT INTO `staff` VALUES ('101', 'xuhao_chef', '厨师', '3000', '1');
 
 -- ----------------------------
 -- Table structure for vip
@@ -446,4 +413,4 @@ CREATE TABLE `vip` (
 -- ----------------------------
 -- Records of vip
 -- ----------------------------
-INSERT INTO `vip` VALUES ('1', '刘能', '2', '18312345678');
+INSERT INTO `vip` VALUES ('1', 'xuhao_vip', '2', '18312345678');
