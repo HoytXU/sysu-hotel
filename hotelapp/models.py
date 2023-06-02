@@ -77,6 +77,7 @@ class Accommodation(models.Model):
 
 
 class Client(models.Model):
+    顾客相片 = models.ImageField(upload_to='Client_images/', blank=True, null=True)
     顾客id = models.AutoField(primary_key=True)
     姓名 = models.CharField(max_length=45, blank=True, null=True)
     身份证号 = models.CharField(max_length=45, blank=True, null=True)
