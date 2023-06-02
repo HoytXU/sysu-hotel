@@ -36,9 +36,14 @@ def insert_client(request):
         id = request.POST.get("id", None)
         name = request.POST.get("name", None)
         identify = request.POST.get("identify", None)
-        twz = Client.objects.create(顾客id=id, 姓名=name, 身份证号=identify)
-        twz.save()
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        client =Client.objects.create(顾客id=id, 姓名=name, 身份证号=identify)
+        if image:
+            client.顾客相片 = image  # 将图片文件赋值给模型的image字段
+
+        client.save()
     return render(request, 'html1.html')
+
 '''
 def delete_staff(request):
     if request.method == "POST":
@@ -95,7 +100,7 @@ def update_staff(request):
     #return render(request, 'html4.html')
 
 #菜品展示函数
-def show_food2(request):
+def show_food(request):
     food_list = Food.objects.all()
     return render(request, 'index.html2', {"food_list": food_list})
 
