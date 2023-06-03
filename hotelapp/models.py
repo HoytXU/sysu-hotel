@@ -130,6 +130,7 @@ class Client(models.Model):
 
 
 class Food(models.Model):
+    菜品相片 = models.ImageField(upload_to='Client_images/', blank=True, null=True)
     菜品编号 = models.IntegerField(primary_key=True)
     菜名 = models.CharField(max_length=45)
     价格 = models.CharField(max_length=45)
@@ -167,6 +168,7 @@ class Park(models.Model):
 
 
 class Room(models.Model):
+    客房款式相片=models.ImageField(upload_to='Client_images/', blank=True, null=True)
     房间号 = models.IntegerField(primary_key=True)
     客房类型 = models.CharField(max_length=45)
     价格 = models.IntegerField()
@@ -180,6 +182,7 @@ class Room(models.Model):
 
 
 class Staff(models.Model):
+    员工相片 = models.ImageField(upload_to='Client_images/', blank=True, null=True)
     员工id = models.AutoField(primary_key=True)
     姓名 = models.CharField(max_length=45)
     职务 = models.CharField(max_length=45)
@@ -196,6 +199,7 @@ class Staff(models.Model):
 
 
 class Vip(models.Model):
+    会员相片 = models.ImageField(upload_to='Client_images/', blank=True, null=True)
     会员编号 = models.AutoField(primary_key=True)
     姓名 = models.CharField(max_length=45)
     会员等级 = models.CharField(max_length=45)

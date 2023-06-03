@@ -23,10 +23,10 @@ class AccommodationAdmin(admin.ModelAdmin):
 class ClientAdmin(admin.ModelAdmin):
 
     '''设置列表可显示的字段'''
-    list_display = ("顾客id","姓名","身份证号")
+    list_display = ("顾客id","姓名","身份证号","顾客相片")
 
     '''设置过滤选项'''
-    list_filter = ("顾客id","姓名","身份证号")
+    list_filter = ("顾客id","姓名","身份证号","顾客相片")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -37,10 +37,10 @@ class ClientAdmin(admin.ModelAdmin):
 class FoodAdmin(admin.ModelAdmin):
 
     '''设置列表可显示的字段'''
-    list_display = ("菜品编号","菜名","价格","厨师id")
+    list_display = ("菜品编号","菜名","价格","厨师id","菜品编号")
 
     '''设置过滤选项'''
-    list_filter = ("菜品编号","菜名","价格","厨师id")
+    list_filter = ("菜品编号","菜名","价格","厨师id","菜品编号")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -79,10 +79,10 @@ class ParkAdmin(admin.ModelAdmin):
 class RoomAdmin(admin.ModelAdmin):
 
     '''设置列表可显示的字段'''
-    list_display = ("房间号","客房类型","价格","负责人编号")
+    list_display = ("房间号","客房类型","价格","负责人编号","客房款式相片")
 
     '''设置过滤选项'''
-    list_filter = ("房间号","客房类型","价格","负责人编号")
+    list_filter = ("房间号","客房类型","价格","负责人编号","客房款式相片")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -92,10 +92,10 @@ class RoomAdmin(admin.ModelAdmin):
 class StaffAdmin(admin.ModelAdmin):
 
     '''设置列表可显示的字段'''
-    list_display = ("员工id","姓名","职务","月薪","工龄")
+    list_display = ("员工id","姓名","职务","月薪","工龄","员工相片")
 
     '''设置过滤选项'''
-    list_filter = ("员工id","姓名","职务","月薪","工龄")
+    list_filter = ("员工id","姓名","职务","月薪","工龄","员工相片")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -105,10 +105,10 @@ class StaffAdmin(admin.ModelAdmin):
 class VipAdmin(admin.ModelAdmin):
 
     '''设置列表可显示的字段'''
-    list_display = ("会员编号","姓名","会员等级","联系方式")
+    list_display = ("会员编号","姓名","会员等级","联系方式","会员相片")
 
     '''设置过滤选项'''
-    list_filter = ("会员编号","姓名","会员等级","联系方式")
+    list_filter = ("会员编号","姓名","会员等级","联系方式","会员相片")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -117,9 +117,9 @@ class VipAdmin(admin.ModelAdmin):
     # list_editable = ('status',)
 admin.site.register(Accommodation, AccommodationAdmin)
 admin.site.register(Client, ClientAdmin)
-# admin.site.register(Food, FoodAdmin)
-# admin.site.register(Order, OrderAdmin)
-# admin.site.register(Park, ParkAdmin)
+admin.site.register(Food, FoodAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(Park, ParkAdmin)
 admin.site.register(Room, RoomAdmin)
-# admin.site.register(Vip, VipAdmin)
-# admin.site.register(Staff, StaffAdmin)
+admin.site.register(Vip, VipAdmin)
+admin.site.register(Staff, StaffAdmin)

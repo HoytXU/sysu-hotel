@@ -17,7 +17,8 @@ def index(request):
 
 def login(request):
     return render(request, "login.html")
-#定义插入函数
+
+#员工插入函数
 def insert(request):
     if request.method == "POST":
         id = request.POST.get("id", None)
@@ -25,34 +26,14 @@ def insert(request):
         job = request.POST.get("job", None)
         salary = request.POST.get("salary", None)
         work_time = request.POST.get("time_work", None)
-        #print(name, work_time)
-        twz = Staff.objects.create(员工id=id, 姓名=name, 职务=job, 月薪=salary, 工龄=work_time)
-        twz.save()
-    return render(request, "index.html")
-
-#顾客信息录入
-def insert_client(request):
-    if request.method == "POST":
-        id = request.POST.get("id", None)
-        name = request.POST.get("name", None)
-        identify = request.POST.get("identify", None)
         image = request.FILES.get("image", None)  # 获取上传的图片文件
-        client =Client.objects.create(顾客id=id, 姓名=name, 身份证号=identify)
+
+        staff = Staff.objects.create(员工id=id, 姓名=name, 职务=job, 月薪=salary, 工龄=work_time)
         if image:
-            client.顾客相片 = image  # 将图片文件赋值给模型的image字段
+            staff.员工相片 = image  # 将图片文件赋值给模型的image字段
 
-        client.save()
-    return render(request, 'html1.html')
-
-'''
-def delete_staff(request):
-    if request.method == "POST":
-        id = request.POST.get("id", None)
-        twz = Staff.objects.filter(员工id=id)
-        twz.delete()
-    return render(request, 'index.html')
-'''
-
+        staff.save()
+    return render(request, "index.html")
 #员工信息删除
 def delete_staff(request):
     if request.method == "GET":
@@ -70,23 +51,6 @@ def search_staff(request):
         #Staff.objects.get(columns=id)
     return render(request, 'index.html', {"staffs": staffs})
 
-'''
-def single(request):
-    context={}
-    context['rlt'] = Staff.objects.all()
-    if request.POST:
-        getname = request.POST['id']
-        print(getname)
-        response = Staff.objects.filter(员工id=getname)
-        if len(response) != 0:
-            context['rlt'] = response
-        else:
-            context['rlt'] = Staff.objects.all()
-    else:
-       context['rlt'] = Staff.objects.all()
-    return render(request, "index.html", context)
-'''
-
 #员工信息修改
 def update_staff(request):
     if request.method == "POST":
@@ -94,15 +58,26 @@ def update_staff(request):
         job = request.POST.get("job")
         salary = request.POST.get("salary")
         time = request.POST.get("time")
-        print(id, job, salary, time)
-        Staff.objects.filter(员工id=id).update(职务=job, 月薪=salary, 工龄=time)
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        Staff.objects.filter(员工id=id).update(职务=job, 月薪=salary, 工龄=time,员工相片=image)
         return render(request, 'index.html')
     #return render(request, 'html4.html')
 
-#菜品展示函数
-def show_food(request):
-    food_list = Food.objects.all()
-    return render(request, 'index.html2', {"food_list": food_list})
+#顾客信息录入
+def insert_client(request):
+    if request.method == "POST":
+        id = request.POST.get("id", None)
+        name = request.POST.get("name", None)
+        identify = request.POST.get("identify", None)
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        client =Client.objects.create(顾客id=id, 姓名=name, 身份证号=identify)
+        if image:
+            client.顾客相片 = image  # 将图片文件赋值给模型的image字段
+
+        client.save()
+    return render(request, 'html1.html')
+
+
 
 #顾客信息展示
 def show_client(request):
@@ -122,8 +97,8 @@ def update_client(request):
         id = request.POST.get("id")
         name = request.POST.get("name")
         identify = request.POST.get("identify")
-        print(id, name, identify)
-        Client.objects.filter(顾客id=id).update(姓名=name, 身份证号=identify)
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        Client.objects.filter(顾客id=id).update(姓名=name, 身份证号=identify,顾客相片=image)
         return render(request, 'html1.html')
 
 
@@ -136,12 +111,65 @@ def search_client(request):
         clients = eval('Client.objects.filter('+columns+'=' + '"'+value+'"' + ')')
     return render(request, 'html1.html', {"clients": clients})
 
-'''
-#展示厨师编号
-def show_cook(request):
-    cook = Staff.objects.filter(职务='厨师')
-    return render(request, 'html4.html', {"cook": cook})
-'''
+
+
+#会员信息录入
+def insert_vip(request):
+    if request.method == "POST":
+        id = request.POST.get("id", None)
+        name = request.POST.get("name", None)
+        rank = request.POST.get("rank", None)
+        tel = request.POST.get("tel", None)
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        vip = Vip.objects.create(会员编号=id, 姓名=name, 会员等级=rank, 联系方式=tel)
+        if image:
+            vip.会员相片 = image  # 将图片文件赋值给模型的image字段
+
+        vip.save()
+    return render(request, 'vip.html')
+
+
+#会员信息展示
+def show_vip(request):
+    people_list = Vip.objects.all()
+    return render(request, "vip.html", {"people_list": people_list})
+
+
+#会员信息删除
+def delete_vip(request):
+    if request.method == "GET":
+        id = request.GET.get("id")
+        Vip.objects.filter(会员编号=id).delete()
+    return render(request, 'vip.html')
+
+
+#会员信息修改
+def update_vip(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        rank = request.POST.get("rank")
+        tel = request.POST.get("tel")
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        Vip.objects.filter(会员编号=id).update(会员等级=rank, 联系方式=tel,顾客相片=image)
+        return render(request, 'vip.html')
+
+
+#会员信息查询
+def search_vip(request):
+    if request.method == "POST":
+        columns = request.POST.get("columns", None)
+        value = request.POST.get("value", None)
+        vips = eval('Vip.objects.filter('+columns+'=' + '"'+value+'"' + ')')
+    return render(request, 'vip.html', {"vips": vips})
+
+
+
+#菜品展示函数
+def show_food(request):
+    food_list = Food.objects.all()
+    return render(request, 'index.html2', {"food_list": food_list})
+
+
 
 #菜品信息录入
 def insert_food(request):
@@ -151,8 +179,12 @@ def insert_food(request):
         price = request.POST.get("price", None)
         cooker = request.POST.get("cooker", None)
         cook = Staff.objects.filter(职务='厨师').get(员工id=cooker)
-        twz = Food.objects.create(菜品编号=id, 菜名=name, 价格=price, 厨师id=cook)
-        twz.save()
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        food = Food.objects.create(菜品编号=id, 菜名=name, 价格=price, 厨师id=cook)
+        if image:
+            food.菜品相片 = image  # 将图片文件赋值给模型的image字段
+
+        food.save()
     return render(request, 'html4.html')
 
 
@@ -175,8 +207,8 @@ def update_food(request):
         id = request.POST.get("id")
         price = request.POST.get("price")
         cooker = request.POST.get("cooker")
-        print(id, price, cooker)
-        Food.objects.filter(菜品编号=id).update(价格=price, 厨师id=Staff.objects.filter(职务='厨师').get(员工id=cooker))
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        Food.objects.filter(菜品编号=id).update(价格=price, 厨师id=Staff.objects.filter(职务='厨师').get(员工id=cooker),菜品相片=image)
         return render(request, 'html4.html')
 
 
@@ -188,50 +220,6 @@ def search_food(request):
         food = eval('Food.objects.filter('+columns+'=' + '"'+value+'"' + ')')
     return render(request, 'html4.html', {"food": food})
 
-
-#会员信息录入
-def insert_vip(request):
-    if request.method == "POST":
-        id = request.POST.get("id", None)
-        name = request.POST.get("name", None)
-        rank = request.POST.get("rank", None)
-        tel = request.POST.get("tel", None)
-        twz = Vip.objects.create(会员编号=id, 姓名=name, 会员等级=rank, 联系方式=tel)
-        twz.save()
-    return render(request, 'vip.html')
-
-
-#会员信息展示
-def show_vip(request):
-    people_list = Vip.objects.all()
-    return render(request, "vip.html", {"people_list": people_list})
-
-
-#会员信息删除
-def delete_vip(request):
-    if request.method == "GET":
-        id = request.GET.get("id")
-        Vip.objects.filter(会员编号=id).delete()
-    return render(request, 'vip.html')
-
-
-#员工信息修改
-def update_vip(request):
-    if request.method == "POST":
-        id = request.POST.get("id")
-        rank = request.POST.get("rank")
-        tel = request.POST.get("tel")
-        Vip.objects.filter(会员编号=id).update(会员等级=rank, 联系方式=tel)
-        return render(request, 'vip.html')
-
-
-#会员信息查询
-def search_vip(request):
-    if request.method == "POST":
-        columns = request.POST.get("columns", None)
-        value = request.POST.get("value", None)
-        vips = eval('Vip.objects.filter('+columns+'=' + '"'+value+'"' + ')')
-    return render(request, 'vip.html', {"vips": vips})
 
 
 #停车场信息录入
@@ -288,8 +276,12 @@ def insert_room(request):
         price = request.POST.get("price", None)
         waiter = request.POST.get("waiter", None)
         cook = Staff.objects.filter(职务='服务员').get(员工id=waiter)
-        twz = Room.objects.create(房间号=id, 客房类型=type, 价格=price, 负责人编号=cook)
-        twz.save()
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        room = Room.objects.create(房间号=id, 客房类型=type, 价格=price, 负责人编号=cook)
+        if image:
+            room.客房款式相片 = image  # 将图片文件赋值给模型的image字段
+
+        room.save()
     return render(request, 'room.html')
 
 
@@ -324,8 +316,8 @@ def update_room(request):
         type = request.POST.get("type")
         price = request.POST.get("price")
         waiter = request.POST.get("waiter")
-        print(id, type, price, waiter)
-        Room.objects.filter(房间号=id).update(客房类型=type, 价格=price, 负责人编号=Staff.objects.filter(职务='服务员').get(员工id=waiter))
+        image = request.FILES.get("image", None)  # 获取上传的图片文件
+        Room.objects.filter(房间号=id).update(客房类型=type, 价格=price, 负责人编号=Staff.objects.filter(职务='服务员').get(员工id=waiter),客房款式相片=image)
         return render(request, 'room.html')
 
 
