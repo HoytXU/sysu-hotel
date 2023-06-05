@@ -26,7 +26,7 @@ class ClientAdmin(admin.ModelAdmin):
     list_display = ("顾客id","姓名","身份证号","顾客相片")
 
     '''设置过滤选项'''
-    list_filter = ("顾客id","姓名","身份证号","顾客相片")
+    list_filter = ("顾客id","姓名","身份证号")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -40,7 +40,7 @@ class FoodAdmin(admin.ModelAdmin):
     list_display = ("菜品编号","菜名","价格","厨师id","菜品相片")
 
     '''设置过滤选项'''
-    list_filter = ("菜品编号","菜名","价格","厨师id","菜品相片")
+    list_filter = ("菜品编号","菜名","价格","厨师id")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -82,7 +82,7 @@ class RoomAdmin(admin.ModelAdmin):
     list_display = ("房间号","客房类型","价格","负责人编号","客房款式相片")
 
     '''设置过滤选项'''
-    list_filter = ("房间号","客房类型","价格","负责人编号","客房款式相片")
+    list_filter = ("房间号","客房类型","价格","负责人编号")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -95,7 +95,7 @@ class StaffAdmin(admin.ModelAdmin):
     list_display = ("员工id","姓名","职务","月薪","工龄","员工相片")
 
     '''设置过滤选项'''
-    list_filter = ("员工id","姓名","职务","月薪","工龄","员工相片")
+    list_filter = ("员工id","姓名","职务","月薪","工龄")
 
     '''每页显示条目数'''
     list_per_page = 15
@@ -108,7 +108,7 @@ class VipAdmin(admin.ModelAdmin):
     list_display = ("会员编号","姓名","会员等级","联系方式","会员相片")
 
     '''设置过滤选项'''
-    list_filter = ("会员编号","姓名","会员等级","联系方式","会员相片")
+    list_filter = ("会员编号","姓名","会员等级","联系方式")
 
     '''每页显示条目数'''
     list_per_page = 15

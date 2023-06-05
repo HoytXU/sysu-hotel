@@ -94,20 +94,38 @@ def update_client(request):
         name = request.POST.get("name")
         identify = request.POST.get("identify")
         image = request.FILES.get("image", None)  # 获取上传的图片文件
-        Client.objects.filter(顾客id=client_id).update(姓名=name, 身份证号=identify,顾客相片=image)
-        return render(request, 'client.html')
+        client = Client.objects.filter(顾客id=client_id).first()
+        client.顾客id=client_id
+        client.姓名=name
+        client.身份证号=identify
+        client.顾客相片=image
+        client.save()
+
+        people_list = Client.objects.all()
+        return render(request, 'client.html',  {"people_list":people_list})
 
 
 
 #顾客信息查询
+# def search_client(request):
+#     if request.method == "POST":
+#         columns = request.POST.get("columns", None)
+#         value = request.POST.get("value", None)
+#         clients = eval('Client.objects.filter('+columns+'=' + '"'+value+'"' + ')')
+#     return render(request, 'client.html', {"clients": clients})
+
 def search_client(request):
+    clients = []  # 默认空的查询结果
+
     if request.method == "POST":
         columns = request.POST.get("columns", None)
         value = request.POST.get("value", None)
-        clients = eval('Client.objects.filter('+columns+'=' + '"'+value+'"' + ')')
+
+        if columns and value:
+            print(1)
+            clients = Client.objects.filter(**{columns: value})
+
     return render(request, 'client.html', {"clients": clients})
-
-
 
 #会员信息录入
 def insert_vip(request):
