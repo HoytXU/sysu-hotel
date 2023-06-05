@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from hotelapp import views
+from django.conf import settings
+from django.conf.urls.static import static
 #from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
     path('index/', views.index),
-    path('login/', views.login),
-    path('insert/', views.insert),
+    path('insert_staff/', views.insert_staff),
     path('insert_client/', views.insert_client),
     path('delete_staff/', views.delete_staff),
     path('search_staff/', views.search_staff),
@@ -60,4 +62,4 @@ urlpatterns = [
     path('delete_accomodation/', views.delete_accomodation),
     path('search_accomodation/', views.search_accomodation),
     path('show_accomodation/', views.show_accomodation),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

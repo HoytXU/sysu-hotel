@@ -19,14 +19,14 @@
 <div style="background-color: #dddddd">
 <nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-                            <li><h2 style="color:#ffffff;float: left;padding-top: 8px">酒店管理系统&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2></li>
-							<!-- <li><a href="http://127.0.0.1:8000/index">员工管理</a></li> -->
+                            <li><a href="http://127.0.0.1:8000/index" style="color:#ffffff;float: left;padding-top: 8px">酒店管理系统&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            <li><a href="http://127.0.0.1:8000/insert_staff">员工管理</a></li>
 							<li><a href="http://127.0.0.1:8000/insert_client" >顾客管理</a></li>
-							<!-- <li><a href="http://127.0.0.1:8000/insert_food">餐厅管理</a></li> -->
+							<li><a href="http://127.0.0.1:8000/insert_food">餐厅管理</a></li>
                             <li><a href="http://127.0.0.1:8000/insert_room">客房管理</a></li>
-							<!-- <li><a href="http://127.0.0.1:8000/insert_park">停车场管理</a></li> -->
-                            <!-- <li><a href="http://127.0.0.1:8000/insert_vip">会员信息管理</a></li> -->
-                            <!-- <li><a href="http://127.0.0.1:8000/insert_order">餐厅订单管理</a></li> -->
+							<li><a href="http://127.0.0.1:8000/insert_park">停车场管理</a></li>
+                            <li><a href="http://127.0.0.1:8000/insert_vip">会员信息管理</a></li>
+                            <li><a href="http://127.0.0.1:8000/insert_order">餐厅订单管理</a></li>
                             <li><a href="http://127.0.0.1:8000/insert_accomodation">客房订单管理</a></li>
 
 						</ul>
@@ -48,14 +48,11 @@
      <p><label>菜品名称&nbsp;:&nbsp;&nbsp;</label><input type="text" name="name" style="width: 500px;height: 25px"/></p>
      <p><label>菜品价格&nbsp;:&nbsp;&nbsp;</label><input type="text" name="price" style="width: 500px;height: 25px"/></p>
      <p><label>厨师编号&nbsp;:&nbsp;&nbsp;</label><input type="text" name="cooker" style="width: 500px;height: 25px"/></p>
-     <!--
-        <i>厨师编号:</i>&nbsp<select name="cook">
-        {% for x in cook %}
-        <option value="x.员工id"> {{x.员工id}} </option>
-        {% endfor %}
-     </select><br/>
-     -->
-        <input type="submit" value="提交">
+     <br>
+     <label for="image">菜品相片:</label>
+     <input type="file" id="image" name="image">
+     <br>
+     <input type="submit" value="提交">
 
 </form>
 </div><p>&nbsp;</p><p>&nbsp;</p>

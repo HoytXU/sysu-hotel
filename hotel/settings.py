@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.staticfiles.urls',
     'hotelapp',
 ]
 
@@ -127,3 +128,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# 定义媒体文件的根目录
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 定义媒体文件的URL前缀
+MEDIA_URL = '/media/'

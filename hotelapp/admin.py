@@ -37,10 +37,10 @@ class ClientAdmin(admin.ModelAdmin):
 class FoodAdmin(admin.ModelAdmin):
 
     '''设置列表可显示的字段'''
-    list_display = ("菜品编号","菜名","价格","厨师id","菜品编号")
+    list_display = ("菜品编号","菜名","价格","厨师id","菜品相片")
 
     '''设置过滤选项'''
-    list_filter = ("菜品编号","菜名","价格","厨师id","菜品编号")
+    list_filter = ("菜品编号","菜名","价格","厨师id","菜品相片")
 
     '''每页显示条目数'''
     list_per_page = 15
