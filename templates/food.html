@@ -42,7 +42,7 @@
 					<h2>菜品信息录入</h2>
     </div>
 </center>
-<form action="/insert_food/" method="post" style="margin-left:40px">
+<form action="/insert_food/" method="post" enctype="multipart/form-data" style="margin-left:40px">
 
          <p><label>菜品编号&nbsp;:&nbsp;&nbsp;</label><input type="text" name="id" style="width: 500px;height: 25px"/></p>
      <p><label>菜品名称&nbsp;:&nbsp;&nbsp;</label><input type="text" name="name" style="width: 500px;height: 25px"/></p>
@@ -67,17 +67,19 @@
         <th>菜品编号</th>
         <th>菜品名称</th>
         <th>价格/元</th>
+        <th width="80px">菜品相片</th>
         <th>厨师编号</th>
         <th colspan="2">操作</th>
     </tr>
-    {% for line in people_list %}
+    {% for line in food_list %}
     <tr>
         <td class="id">{{line.菜品编号}}</td>
         <td>{{line.菜名}}</td>
         <td>{{line.价格}}</td>
+        <td style="display: inline-block"><img src="{{ line.菜品相片.url}}" /></td>
         <td>{{line.厨师id.员工id}}</td>
-        <td><center><button class="btn btn-primary delete">删除</button></center></td>
-        <td><center><button class="btn btn-primary update">修改</button></center></td>
+        <td><button class="btn btn-primary delete">删除</button></td>
+        <td><button class="btn btn-primary update">修改</button></td>
     </tr>
     {% endfor %}
     </table>
@@ -86,7 +88,7 @@
 <div style="width: 70%;margin-left: 15%;background-color: #ffffff;height: 500px">
 <center>
 	<h2><a>菜品信息查询</a></h2>
-                <form action="/search_food/" method="post">
+                <form action="/search_food/" method="post" enctype="multipart/form-data">
         <p>根据选择的属性查询菜品信息</p>
                     <i></i>&nbsp<select name="columns">
                         <option value="菜品编号">编号</option>
@@ -102,7 +104,7 @@
         <tr>
             {% for line in  food %}
              <td style="display: inline-block">
-                 <a href="{{ line.url}}" target="_blank"><img src="{{ line.image}}" width="160" height="220" /></a><p></p>编号：{{line.菜品编号}}<br>菜名：{{line.菜名}}<br>价格：{{ line.价格 }}<br>厨师编号：{{ line.厨师id.员工id }}
+                <img src="{{ line.菜品相片.url}}" width="160" height="220"/><p></p>编号：{{line.菜品编号}}<br>菜名：{{line.菜名}}<br>价格：{{ line.价格 }}<br>厨师编号：{{ line.厨师id.员工id }}
              </td>
             {% endfor %}
         </tr>
@@ -115,9 +117,8 @@
 <script src="../static/js/jquery-2.1.4.min.js"></script>
 <script>
     $(".delete").click(function () {
-        $(this).parent().parent().remove();
         var id = $(this).parent().siblings(".id").first().html();
-        <!--alert(id);-->
+        $(this).parent().parent().remove();
         $.get('../delete_food',{'id': id});
     });
 </script>
@@ -126,16 +127,44 @@
         var ID = $(this).parent().siblings(".id").first();
         if ($(this).text() == "修改") {
             $(this).text("完成");
-            ID.next().next().html('<input type=\"text\" class=\"price\"/>');
-            ID.next().next().next().html('<input type=\"text\" class=\"cooker\"/>');
+            ID.next().html('<input type="text" class="name"/>');
+            ID.next().next().html('<input type="text" class="price"/>');
+            ID.next().next().next().html('<input type="file" class="image" id="fileInput"/>');
+            ID.next().next().next().next().html('<input type="text" class="cooker"/>');
         }
         else{
+            var fileInput = document.getElementById("fileInput");
+            var file = fileInput.files[0];
+
+            var formData = new FormData();
+            formData.append("image", file); // 将文件添加到 FormData 对象
+
             var id = ID.html();
+            var name = ID.next().children().val();
             var price = ID.next().next().children().val();
-            var cooker = ID.next().next().next().children().val();
-            var food = {'id':id, 'price':price, 'cooker': cooker};
-            $.post('../update_food/',food, function(res){
+            var cooker = ID.next().next().next().next().children().val();
+
+            formData.append("id", id);
+            formData.append("name", name);
+            formData.append("price", price);
+            formData.append("cooker", cooker);
+
+            $.ajax({
+              url: "../update_food/",
+              type: "POST",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (res) {
+                // 处理成功响应
+                // 在此处处理返回的 HTTPS 响应，包括图片和其他数据
+                // res 中可能包含服务器返回的其他数据
                 location.reload();
+              },
+              error: function (xhr, status, error) {
+                // 处理错误响应
+                // 在此处处理 HTTPS 请求错误
+              }
             });
         }
     });

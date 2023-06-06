@@ -42,7 +42,7 @@
 					<h2>客房信息录入</h2>
     </div>
 </center>
-<form action="/insert_room/" method="post" style="margin-left:40px">
+<form action="/insert_room/" method="post" enctype="multipart/form-data" style="margin-left:40px">
 
     <p><label>房间编号&nbsp;:&nbsp;&nbsp;</label><input type="text" name="id" style="width: 500px;height: 25px"/></p>
     <p><label>客房类型&nbsp;:&nbsp;&nbsp;</label><input type="text" name="type" style="width: 500px;height: 25px"/></p>
@@ -67,17 +67,19 @@
         <th>房间号</th>
         <th>客房类型</th>
         <th>价格/元</th>
+        <th width="80px">客房相片</th>
         <th>负责人编号</th>
         <th colspan="2">操作</th>
     </tr>
-    {% for line in people_list %}
+    {% for line in room_list %}
     <tr>
         <td class="id">{{line.房间号}}</td>
         <td>{{line.客房类型}}</td>
         <td>{{line.价格}}</td>
+        <td style="display: inline-block"><img src="{{ line.客房款式相片.url}}" /></td>
         <td>{{line.负责人编号.员工id}}</td>
-        <td><center><button class="btn btn-primary delete">删除</button></center></td>
-        <td><center><button class="btn btn-primary update">修改</button></center></td>
+        <td><button class="btn btn-primary delete">删除</button></td>
+        <td><button class="btn btn-primary update">修改</button></td>
     </tr>
     {% endfor %}
     </table>
@@ -87,7 +89,7 @@
 <center>
 	<h2><a>客房信息查询</a></h2>
 
-                <form action="/search_room/" method="post">
+                <form action="/search_room/" method="post" enctype="multipart/form-data">
         <p>根据选择的属性查询客房信息</p>
                     <i></i>&nbsp<select name="columns">
                         <option value="房间号">房间号</option>
@@ -103,7 +105,7 @@
         <tr>
             {% for line in  room %}
              <td style="display: inline-block">
-                 <a href="{{ line.url}}" target="_blank"><img src="{{ line.image}}" width="160" height="220" /></a><p></p>房间号：{{line.房间号}}<br>客房类型：{{line.客房类型}}<br>价格：{{ line.价格 }}<br>负责人编号：{{ line.负责人编号.员工id }}
+                <img src="{{ line.客房款式相片.url}}" width="160" height="220"/><p></p>房间号：{{line.房间号}}<br>客房类型：{{line.客房类型}}<br>价格：{{ line.价格 }}<br>负责人编号：{{ line.负责人编号.员工id }}
              </td>
             {% endfor %}
         </tr>
@@ -116,10 +118,10 @@
 <script src="../static/js/jquery-2.1.4.min.js"></script>
 <script>
     $(".delete").click(function () {
-        $(this).parent().parent().remove();
         var id = $(this).parent().siblings(".id").first().html();
-        alert(id);
+        $(this).parent().parent().remove();
         $.get('../delete_room',{'id': id});
+        location.reload();
     });
 </script>
 <script>
@@ -127,18 +129,45 @@
         var ID = $(this).parent().siblings(".id").first();
         if ($(this).text() == "修改") {
             $(this).text("完成");
-            ID.next().html('<input type=\"text\" class=\"type\"/>');
-            ID.next().next().html('<input type=\"text\" class=\"price\"/>');
-            ID.next().next().next().html('<input type=\"text\" class=\"waiter\"/>');
+            ID.next().html('<input type="text" class="type"/>');
+            ID.next().next().html('<input type="text" class="price"/>');
+            ID.next().next().next().html('<input type="file" class="image" id="fileInput"/>');
+            ID.next().next().next().next().html('<input type="text" class="waiter"/>');
         }
         else{
+            var fileInput = document.getElementById("fileInput");
+            var file = fileInput.files[0];
+
+            var formData = new FormData();
+            formData.append("image", file); // 将文件添加到 FormData 对象
+
+
             var id = ID.html();
             var type = ID.next().children().val();
             var price = ID.next().next().children().val();
-            var waiter = ID.next().next().next().children().val();
-            var room = {'id':id, 'type':type, 'price': price, 'waiter':waiter};
-            $.post('../update_room/',room, function(res){
+            var waiter = ID.next().next().next().next().children().val();
+
+            formData.append("id", id);
+            formData.append("type", type);
+            formData.append("price", price);
+            formData.append("waiter", waiter);
+
+            $.ajax({
+              url: "../update_room/",
+              type: "POST",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (res) {
+                // 处理成功响应
+                // 在此处处理返回的 HTTPS 响应，包括图片和其他数据
+                // res 中可能包含服务器返回的其他数据
                 location.reload();
+              },
+              error: function (xhr, status, error) {
+                // 处理错误响应
+                // 在此处处理 HTTPS 请求错误
+              }
             });
         }
     });

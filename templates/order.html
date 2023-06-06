@@ -68,14 +68,14 @@
         <th>桌号</th>
         <th>操作</th>
     </tr>
-    {% for line in people_list %}
+    {% for line in order_list %}
     <tr>
         <td class="id">{{line.id}}</td>
         <td>{{line.顾客编号.顾客id}}</td>
         <td>{{line.菜品编号.菜品编号}}</td>
         <td>{{line.服务员编号.员工id}}</td>
         <td>{{line.桌号}}</td>
-        <td><center><button class="btn btn-primary delete">删除</button></center></td>
+        <td><button class="btn btn-primary delete">删除</button></td>
         <!--<td><button class="btn btn-primary update">修改</button></td>-->
     </tr>
     {% endfor %}
@@ -108,9 +108,8 @@
 <script src="../static/js/jquery-2.1.4.min.js"></script>
 <script>
     $(".delete").click(function () {
-        $(this).parent().parent().remove();
         var id = $(this).parent().siblings(".id").first().html();
-        alert(id);
+        $(this).parent().parent().remove();
         $.get('../delete_order',{'id': id});
     });
 </script>

@@ -54,7 +54,6 @@
 </div><p>&nbsp;</p><p>&nbsp;</p>
 <div style="width: 70%;margin-left: 15%;background-color: #ffffff;height: 500px">
 <center>
-<a href="http://127.0.0.1:8000/show_accomodation">
     <div class="logo">
 					<h2>客房订单信息展示</h2>
     </div></a>
@@ -66,14 +65,13 @@
         <th>入住时间</th>
         <th>操作</th>
     </tr>
-    {% for line in people_list %}
+    {% for line in acc_list %}
     <tr>
         <td class="id">{{line.id}}</td>
         <td>{{line.顾客id.顾客id}}</td>
         <td>{{line.客房编号.房间号}}</td>
         <td>{{line.入住时间}}</td>
         <td><button class="btn btn-primary delete">删除</button></td>
-        <!--<td><button class="btn btn-primary update">修改</button></td>-->
     </tr>
     {% endfor %}
     </table>
@@ -93,7 +91,7 @@
         <th>价格</th>
         <th>入住时间</th>
     </tr>
-    {% for line in room_list %}
+    {% for line in filter_list %}
     <tr>
         <td>{{line.房间号}}</td>
         <td>{{line.客房类型}}</td>
@@ -109,10 +107,9 @@
 <script src="../static/js/jquery-2.1.4.min.js"></script>
 <script>
     $(".delete").click(function () {
-        $(this).parent().parent().remove();
         var id = $(this).parent().siblings(".id").first().html();
-        alert(id);
-        $.get('../delete_accomodation',{'id': id});
+        $(this).parent().parent().remove();
+        $.get('../delete_accomdation',{'id': id});
     });
 </script>
 </html>

@@ -80,6 +80,7 @@
         <th>职务</th>
         <th>月薪/元</th>
         <th>工龄/年</th>
+        <th width="80px">员工相片</th>
         <th colspan="2">操作</th>
     </tr>
     {% for line in people_list %}
@@ -89,6 +90,7 @@
         <td>{{line.职务}}</td>
         <td>{{line.月薪 }}</td>
         <td>{{line.工龄 }}</td>
+        <td style="display: inline-block"><img src="{{ line.员工相片.url}}" /></td>
         <td><button class="btn btn-primary delete">删除</button></td>
         <td><button class="btn btn-primary update">修改</button></td>
     </tr>
@@ -101,7 +103,7 @@
 <div style="width: 70%;margin-left: 15%;background-color: #ffffff;height: 500px">
     <center>
         <h2><a>员工信息查询</a></h2>
-                    <form action="/search_staff/" method="post">
+                    <form action="/search_staff/" method="post" enctype="multipart/form-data">
             <p>根据选择的属性查询员工信息</p>
                         <i></i>&nbsp<select name="columns">
                             <option value="员工id">工号</option>
@@ -118,7 +120,7 @@
             <tr>
                 {% for line in  staffs %}
                  <td style="display: inline-block">
-                     <a href="{{ line.url}}" target="_blank"><img src="/static/images/t1.jpg" width="160" height="220" /></a><p></p>编号：{{line.员工id}}<br>姓名：{{line.姓名}}<br>职务：{{ line.职务 }}<br>月薪：{{ line.月薪 }}<br>工龄：{{ line.工龄 }}
+                    <img src="{{ line.员工相片.url}}" width="160" height="220"/><p></p>编号：{{line.员工id}}<br>姓名：{{line.姓名}}<br>职务：{{ line.职务 }}<br>月薪：{{ line.月薪 }}<br>工龄：{{ line.工龄 }}
                  </td>
                 {% endfor %}
             </tr>
@@ -134,7 +136,7 @@
     $(".delete").click(function () {
         var id = $(this).parent().siblings(".id").first().html();
         $(this).parent().parent().remove();
-        $.get('../delete_client',{'id': id});
+        $.get('../delete_staff',{'id': id});
     });
 </script>
 <script>
@@ -142,18 +144,47 @@
         var ID = $(this).parent().siblings(".id").first();
         if ($(this).text() == "修改") {
             $(this).text("完成");
+            ID.next().html('<input type="text" class="name"/>');
             ID.next().next().html('<input type="text" class="job"/>');
             ID.next().next().next().html('<input type="text" class="salary"/>');
             ID.next().next().next().next().html('<input type="text" class="time"/>');
+            ID.next().next().next().next().next().html('<input type="file" class="image" id="fileInput"/>');
         }
         else{
+            var fileInput = document.getElementById("fileInput");
+            var file = fileInput.files[0];
+
+            var formData = new FormData();
+            formData.append("image", file); // 将文件添加到 FormData 对象
+
             var id = ID.html();
+            var name = ID.next().children().val();
             var job = ID.next().next().children().val();
             var salary = ID.next().next().next().children().val();
             var time = ID.next().next().next().next().children().val();
-            var staff = {'id':id, 'job':job, 'salary': salary, 'time':time};
-            $.post('../update_staff/',staff, function(res){
+
+            formData.append("id", id);
+            formData.append("name", name);
+            formData.append("job", job);
+            formData.append("salary", salary);
+            formData.append("time", time);
+
+            $.ajax({
+              url: "../update_staff/",
+              type: "POST",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (res) {
+                // 处理成功响应
+                // 在此处处理返回的 HTTPS 响应，包括图片和其他数据
+                // res 中可能包含服务器返回的其他数据
                 location.reload();
+              },
+              error: function (xhr, status, error) {
+                // 处理错误响应
+                // 在此处处理 HTTPS 请求错误
+              }
             });
         }
     });

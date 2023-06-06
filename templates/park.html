@@ -67,13 +67,13 @@
         <th>车辆编号</th>
         <th colspan="2">操作</th>
     </tr>
-    {% for line in people_list %}
+    {% for line in car_list %}
     <tr>
         <td class="id">{{line.车位编号}}</td>
         <td>{{line.当前状态}}</td>
         <td>{{line.车辆牌号}}</td>
-        <td><center><button class="btn btn-primary delete">删除</button></center></td>
-        <td><center><button class="btn btn-primary update">修改</button></center></td>
+        <td><button class="btn btn-primary delete">删除</button></td>
+        <td><button class="btn btn-primary update">修改</button></td>
     </tr>
     {% endfor %}
     </table>
@@ -110,8 +110,8 @@
 <script src="../static/js/jquery-2.1.4.min.js"></script>
 <script>
     $(".delete").click(function () {
-        $(this).parent().parent().remove();
         var id = $(this).parent().siblings(".id").first().html();
+        $(this).parent().parent().remove();
         $.get('../delete_park',{'id': id});
     });
 </script>
@@ -120,8 +120,8 @@
         var ID = $(this).parent().siblings(".id").first();
         if ($(this).text() == "修改") {
             $(this).text("完成");
-            ID.next().html('<input type=\"text\" class=\"status\"/>');
-            ID.next().next().html('<input type=\"text\" class=\"num\"/>');
+            ID.next().html('<input type="text" class="status"/>');
+            ID.next().next().html('<input type="text" class="num"/>');
         }
         else{
             var id = ID.html();
